@@ -65,6 +65,7 @@ mviz.plot_events( events.loc[190:198], indicators = ['Marker','Arrow'], annotate
 #### TRACKING DATA ####
 
 # READING IN TRACKING DATA
+# shape=[141156, 32] -> 90mins * 60sec * 25events ~ 135000 + before and after game event data
 tracking_home = mio.tracking_data(DATADIR,game_id,'Home')
 tracking_away = mio.tracking_data(DATADIR,game_id,'Away')
 
@@ -77,6 +78,7 @@ tracking_away = mio.to_metric_coordinates(tracking_away)
 
 # Plot some player trajectories (players 11,1,2,3,4)
 fig,ax = mviz.plot_pitch()
+# 60sec * 25events = 1500
 ax.plot( tracking_home['Home_11_x'].iloc[:1500], tracking_home['Home_11_y'].iloc[:1500], 'r.', MarkerSize=1)
 ax.plot( tracking_home['Home_1_x'].iloc[:1500], tracking_home['Home_1_y'].iloc[:1500], 'b.', MarkerSize=1)
 ax.plot( tracking_home['Home_2_x'].iloc[:1500], tracking_home['Home_2_y'].iloc[:1500], 'g.', MarkerSize=1)
@@ -89,6 +91,7 @@ fig,ax = mviz.plot_frame( tracking_home.loc[KO_Frame], tracking_away.loc[KO_Fram
 
 # PLOT POISTIONS AT GOAL
 fig,ax = mviz.plot_events( events.loc[198:198], indicators = ['Marker','Arrow'], annotate=True )
+# index of goal event
 goal_frame = events.loc[198]['Start Frame']
 fig,ax = mviz.plot_frame( tracking_home.loc[goal_frame], tracking_away.loc[goal_frame], figax = (fig,ax) )
 
