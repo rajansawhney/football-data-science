@@ -47,15 +47,18 @@ def calc_player_velocities(team, smoothing=True, filter_='Savitzky-Golay', windo
     # estimate velocities for players in team
     for player in player_ids: # cycle through players individually
         # difference player positions in timestep dt to get unsmoothed estimate of velicity
+        # dt = 40 milli-seconds in metrica data
         vx = team[player+"_x"].diff() / dt
         vy = team[player+"_y"].diff() / dt
 
+        # throw away outlying values
         if maxspeed>0:
             # remove unsmoothed data points that exceed the maximum speed (these are most likely position errors)
             raw_speed = np.sqrt( vx**2 + vy**2 )
             vx[ raw_speed>maxspeed ] = np.nan
             vy[ raw_speed>maxspeed ] = np.nan
             
+        # smooth for performance
         if smoothing:
             if filter_=='Savitzky-Golay':
                 # calculate first half velocity

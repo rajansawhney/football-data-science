@@ -23,7 +23,7 @@ import numpy as np
 import pandas as pd
 
 # set up initial path to data
-DATADIR = '/PATH/TO/WHERE/YOU/SAVED/THE/SAMPLE/DATA'
+DATADIR = '/Users/rsawhney/dev/football-data-science/analysis-with-tracking-data/data'
 game_id = 2 # let's look at sample match 2
 
 # read in the event data
