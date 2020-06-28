@@ -146,3 +146,75 @@ for s,e in zip(player_sprints_start,player_sprints_end):
     ax.plot(tracking_home[column_x].iloc[s:e+1],tracking_home[column_y].iloc[s:e+1],'r')
     
 # END
+
+
+""" 
+HOMEWORK
+# 1. Plot passes and shot leading up to the second and third goal
+"""
+# all shots
+shots = events[events['Type']=='SHOT']
+goals = shots[shots['Subtype'].str.contains('-GOAL')].copy()
+
+#2nd goal (scored by away team - blue) - index of goal event is 823
+mviz.plot_events( events.loc[818:823], indicators = ['Marker','Arrow'], annotate=True, color='b' )
+
+#3rd goal (scored by home team - red) - index of goal event is 1118
+# filter out shot and passes
+passes_shots = events[events['Type'].isin(['SHOT', 'PASS'])]
+mviz.plot_events( passes_shots.loc[1109:1118], indicators = ['Marker','Arrow'], annotate=True, color='r' )
+
+"""
+# 2. Plot all the shots by Player 9 of the home team. Use diffrent symbol and transparency (alphabet)
+"""
+
+home_player9_shots = events[ (events.From=='Player9') & (events.Type=='SHOT') & (events.Team=='Home') ]
+
+home_player9_shots_goal = home_player9_shots[home_player9_shots['Subtype'].str.contains('-GOAL')].copy()
+home_player9_shots_nogoal = home_player9_shots[~home_player9_shots['Subtype'].str.contains('-GOAL')].copy()
+
+fig, ax = mviz.plot_events(home_player9_shots_goal, indicators = ['Marker', 'Arrow'], annotate=False, color='g', alpha=1, marker_style='s')
+mviz.plot_events(home_player9_shots_nogoal, figax = (fig, ax), indicators = ['Marker', 'Arrow'], annotate=False, color='r', alpha=0.2, marker_style='o')
+
+
+"""
+# 3. Plot position of all players at Player 9's goal using tracking data
+"""
+goal_frame = home_player9_shots_goal['Start Frame'] 
+fig, ax = mviz.plot_frame( tracking_home.loc[goal_frame], tracking_away.loc[goal_frame], PlayerAlpha=0.3)
+fig, ax = mviz.plot_events(home_player9_shots_goal, figax = (fig, ax), indicators = ['Marker', 'Arrow'], annotate=True)
+
+"""
+# 4. Calculate distance covered by each player
+"""
+teams = ['Home', 'Away']
+data = [tracking_home, tracking_away]
+ 
+for name, data in zip(teams, data):
+    team_players = np.unique( [c.split('_')[1] for c in data.columns if c[:4] == name ])
+    team_summary = pd.DataFrame(index=team_players)
+    
+    # Calculate total distance covered for each player
+    distance = []
+    for player in team_summary.index:
+        column = name + '_' + player + '_speed'
+        player_distance = data[column].sum()/25./1000 # this is the sum of distance travelled from one observation to the next (1/25 = 40ms) in kilometers
+        distance.append(player_distance)
+        
+    team_summary['Distance [km]'] = distance
+    team_summary = team_summary.sort_values(['Distance [km]'], ascending=False)
+    
+    print("***** " + name + " team summary *****")
+    print(team_summary)
+    
+    #make bar chart of distance covered by each player
+    fig, ax = plt.subplots()
+    ax = team_summary['Distance [km]'].plot.bar(rot=0)
+    ax.set_xlabel('Player')
+    ax.set_ylabel('Distance covered [km]')
+    fig.suptitle(name + 'Team', y=0.95)
+    
+
+
+
+
