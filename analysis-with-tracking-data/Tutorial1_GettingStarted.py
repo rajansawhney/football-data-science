@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sun Apr  5 13:19:08 2020
-
-Homework answers for lesson 4 of "Friends of Tracking" #FoT
 
 Data can be found at: https://github.com/metrica-sports/sample-data
 
-@author: Laurie Shaw (@EightyFivePoint)
 """
 
 import Metrica_IO as mio
@@ -89,7 +85,7 @@ ax.plot( tracking_home['Home_4_x'].iloc[:1500], tracking_home['Home_4_y'].iloc[:
 KO_Frame = events.loc[0]['Start Frame']
 fig,ax = mviz.plot_frame( tracking_home.loc[KO_Frame], tracking_away.loc[KO_Frame] )
 
-# PLOT POISTIONS AT GOAL
+# PLOT POSITIONS AT 1st GOAL
 fig,ax = mviz.plot_events( events.loc[198:198], indicators = ['Marker','Arrow'], annotate=True )
 # index of goal event
 goal_frame = events.loc[198]['Start Frame']

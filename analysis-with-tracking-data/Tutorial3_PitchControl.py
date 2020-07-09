@@ -1,17 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 13 11:34:26 2020
-
 Script for lesson 6 of "Friends of Tracking" #FoT
 
 Data can be found at: https://github.com/metrica-sports/sample-data
 
 Accompanying video tutorials can be found here: https://www.youtube.com/watch?v=5X1cSehLg6s
 
-GitHub repo: https://github.com/Friends-of-Tracking-Data-FoTD/LaurieOnTracking
-
-@author: Laurie Shaw (@EightyFivePoint)
 """
 
 import Metrica_IO as mio
@@ -21,8 +16,8 @@ import Metrica_PitchControl as mpc
 import numpy as np
 
 # set up initial path to data
-DATADIR = '/PATH/TO/WHERE/YOU/SAVED/THE/SAMPLE/DATA'
-DATADIR = '/Users/laurieshaw/Documents/Football/Data/TrackingData/Metrica/sample-data-master/data'
+DATADIR = '/Users/rsawhney/dev/football-data-science/analysis-with-tracking-data/data'
+# DATADIR = '/Users/laurieshaw/Documents/Football/Data/TrackingData/Metrica/sample-data-master/data'
 
 game_id = 2 # let's look at sample match 2
 
@@ -67,9 +62,10 @@ params = mpc.default_model_params()
 GK_numbers = [mio.find_goalkeeper(tracking_home),mio.find_goalkeeper(tracking_away)]
 
 # evaluated pitch control surface for first pass
+# 820 - frame where player 21 makes the pass
 PPCF,xgrid,ygrid = mpc.generate_pitch_control_for_event(820, events, tracking_home, tracking_away, params, GK_numbers, field_dimen = (106.,68.,), n_grid_cells_x = 50)
 mviz.plot_pitchcontrol_for_event( 820, events,  tracking_home, tracking_away, PPCF, annotate=True )
-# evaluated pitch control surface for second pass
+# evaluated pitch control surface for second pass by player 19 at frame 821
 PPCF,xgrid,ygrid = mpc.generate_pitch_control_for_event(821, events, tracking_home, tracking_away, params, GK_numbers, field_dimen = (106.,68.,), n_grid_cells_x = 50)
 mviz.plot_pitchcontrol_for_event( 821, events,  tracking_home, tracking_away, PPCF, annotate=True )
 # evaluated pitch control surface for third pass

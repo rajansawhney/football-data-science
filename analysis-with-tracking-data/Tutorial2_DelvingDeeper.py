@@ -1,17 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Apr 13 11:34:26 2020
-
 Script for lesson 5 of "Friends of Tracking" #FoT
 
 Data can be found at: https://github.com/metrica-sports/sample-data
 
 Accompanying video tutorials can be found here: https://www.youtube.com/channel/UCUBFJYcag8j2rm_9HkrrA7w
 
-GitHub repo: https://github.com/Friends-of-Tracking-Data-FoTD/LaurieOnTracking
-
-@author: Laurie Shaw (@EightyFivePoint)
 """
 
 
