@@ -1,4 +1,4 @@
-Football data science 
+# Football data science
 
 Based on tutorials by [Friends of tracking](https://github.com/Friends-of-Tracking-Data-FoTD)
 
@@ -58,7 +58,7 @@ Based on tutorials by [Friends of tracking](https://github.com/Friends-of-Tracki
   
   ![Shots attempted by player9](analysis-with-tracking-data/plots/home-player9-shots.png)
   
-  3. Plot postitions of all players at player9's goal using tracking data
+  3. Plot postitions of all players at player10's goal using tracking data
   
   `Player postions at time of goal`
   
@@ -95,7 +95,7 @@ Based on tutorials by [Friends of tracking](https://github.com/Friends-of-Tracki
  
  ![Pass probablity for home team's succesful passes](analysis-with-tracking-data/plots/t3-pass-attempted-vs-pass-prob.png)
  
- - Plot risky passes - successful passes will low probability
+ - Plot risky passes - successful passes with low probability
  
  `Risky passes`
  
