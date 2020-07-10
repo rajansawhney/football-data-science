@@ -62,7 +62,7 @@ Based on tutorials by [Friends of tracking](https://github.com/Friends-of-Tracki
   
   `Player postions at time of goal`
   
-  ![Player postions at time of goal](analysis-with-tracking-data/plots/all-player-pos-at-player9-goal.png)
+  ![Player postions at time of goal](analysis-with-tracking-data/plots/all-players-pos-at-goal.png)
   
   4. Display distance covered using a bar chart
   
