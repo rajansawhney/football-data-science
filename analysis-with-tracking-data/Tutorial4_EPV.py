@@ -20,9 +20,9 @@ Notes:
 
     
 Pitch control can identify where on the field a team can pass the ball and retain possession.
-However, it does not tell you the 'value' of those passing optons
+However, it does not tell you the 'value' of those passing options. A new pass is as good as any other. 
 
-A new pass is as likely as the other. We want to value pasing options to identify best passing options that increase the probability of scoring
+We want to value pasing options to identify best passing options that increase the probability of scoring
 
 EXPECTED POSSESSION VALUE (EPV)
 EPV = Pposs (G | situation) -> Probability that the possession will result in a Goal, given the current situation
@@ -36,14 +36,11 @@ EPV = Pposs (G | situation) = Pposs(G | ball, team, opponents, match state)
       -- match state - open play, set piece, score line, time left
       
 For simplicity:
-
                                
 EPV = Pposs (G | situation) = Pposs(G | ball, match state)
 
       -- ball - where is the ball, pall position
       -- match state - open play, set piece, score line, time left
-
-
 
 Think of possession as sequences of states.
 Next state is dependent on the current state - Markov process
@@ -54,7 +51,7 @@ States can be:
     3. goal (end state)
     4. loss of possession (end state)
     
-Core of the model is to calculate the prob of moving from the current state into another
+Core of the model is to calculate the probability of moving from the current state into another
 
 Given the current position of the ball, what is the prob that:
     - The ball is successfully moved to another location on the field?
@@ -77,7 +74,7 @@ The value of a completed action is the difference between the EPV value of the t
 A pass from position Ri to Rf:
         value added = EPV(Rf) - EPV(Ri)
 
-But about a player possession wants to pick the best option?
+But what about when a player possession wants to pick the best pass option?
 
 An expected value at Rf is:
     PitchControl(Rf) x EPV(Rf)

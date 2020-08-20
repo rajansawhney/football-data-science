@@ -3,6 +3,7 @@
 Based on tutorials by [Friends of tracking](https://github.com/Friends-of-Tracking-Data-FoTD)
 
 ## Tutorial 1
+### Basics of using event data
 - Incorporate metric coordinates into events data - to measure speed in m/s and goal distance in m, etc.
 - Plot players, passes and shots
   
@@ -24,6 +25,7 @@ Based on tutorials by [Friends of tracking](https://github.com/Friends-of-Tracki
   
   
 ## Tutorial 2
+### Player velocities
 - Calculate player velocities, minutes played, distance covered for each player using tracking data
   
   `Player velocities`
@@ -73,6 +75,7 @@ Based on tutorials by [Friends of tracking](https://github.com/Friends-of-Tracki
 
  
 ## Tutorial 3
+### Pitch Control
  - Create a pitch control model using parameters `{ frame index, events, tracking_home, tracking_away, static_default_params_dict, GK_numbers, field_dim}` 
     where `static_default_params_dict` includes max_player_speed, max_player_acceleration, average_ball_speed, reaction_time  etc default observed values
  - Plot pitch control for 3 passes leading up to the second goal of the game
@@ -102,3 +105,93 @@ Based on tutorials by [Friends of tracking](https://github.com/Friends-of-Tracki
  ![Risky passes](analysis-with-tracking-data/plots/t3-risky-passes.png)
    
     
+## Tutorial 4
+### Expected Possession Value
+
+Pitch control can identify where on the field a team can pass the ball and retain possession.
+However, it does not tell you the 'value' of those passing options. A new pass is as good as any other. 
+
+We want to value pasing options to identify best passing options that increase the probability of scoring
+
+EXPECTED POSSESSION VALUE (EPV)
+EPV = Pposs (G | situation) -> Probability that the possession will result in a Goal, given the current situation
+                               - value of possessing the ball at any given situation
+                               
+EPV = Pposs (G | situation) = Pposs(G | ball, team, opponents, match state)
+
+      -- ball - where is the ball, pall position,
+      -- team - position and velocity of team players in possession,
+      -- opponents - position and velocity of opponent players not in possession,
+      -- match state - open play, set piece, score line, time left
+      
+For simplicity:
+                               
+EPV = Pposs (G | situation) = Pposs(G | ball, match state)
+
+      -- ball - where is the ball, pall position
+      -- match state - open play, set piece, score line, time left
+
+Think of possession as sequences of states.
+Next state is dependent on the current state - Markov process
+
+States can be:
+    1. zones on the fields - eg simple grid
+    2. set piece
+    3. goal (end state)
+    4. loss of possession (end state)
+    
+Core of the model is to calculate the probability of moving from the current state into another
+
+Given the current position of the ball, what is the prob that:
+    - The ball is successfully moved to another location on the field?
+    - A set piece is awarded (corner, penalty, feekick)?
+    - Goal is scored?
+    - Possession is lost?
+    
+Use a transition matrix between states
+
+Takes a lot of data to develop a EPV model
+
+EPV model: https://chart-studio.plotly.com/~laurieshaw/71/#/
+
+---
+
+Value of a pass
+
+The value of a completed action is the difference between the EPV value of the two states
+
+A pass from position Ri to Rf:
+        value added = EPV(Rf) - EPV(Ri)
+
+But what about when a player possession wants to pick the best pass option?
+
+An expected value at Rf is:
+    PitchControl(Rf) x EPV(Rf)
+    
+The current expected value at Ri is:
+    PitchControl(Ri) x EPV(Ri)
+    
+Expected value-added of the passing option is:
+    PitchControl(Rf) x EPV(Rf) - PitchControl(Ri) x EPV(Ri)
+
+ - Plot risky passes - successful passes with low probability
+ 
+ `EPV grid`
+ 
+ ![EPV at assist instance](analysis-with-tracking-data/plots/4_epv_grid.png)
+
+ `EPV at assist instance`
+ 
+ ![EPV at assist instance](analysis-with-tracking-data/plots/4_epv_at_assist_instance.png)
+
+`EPV x Pitch Control home`
+
+ ![PC home](analysis-with-tracking-data/plots/4_pc_home.png)
+
+ ![EPV x PC home](analysis-with-tracking-data/plots/4_epv_x_pc_home.png)
+
+`EPV x Pitch Control away`
+
+ ![PC away](analysis-with-tracking-data/plots/4_pc_away.png)
+
+ ![EPV x PC away](analysis-with-tracking-data/plots/4_epv_x_pc_away.png)
