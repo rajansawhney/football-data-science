@@ -91,9 +91,9 @@ Based on tutorials by [Friends of tracking](https://github.com/Friends-of-Tracki
    
  - Calculate and plot pass probablity for every successful pass by the home team
  
- `Pass probablity for home team's succesful passes`
+ `Pass probablity for home team's successful passes`
  
- ![Pass probablity for home team's succesful passes](analysis-with-tracking-data/plots/t3-pass-attempted-vs-pass-prob.png)
+ ![Pass probablity for home team's successful passes](analysis-with-tracking-data/plots/t3-pass-attempted-vs-pass-prob.png)
  
  - Plot risky passes - successful passes with low probability
  
