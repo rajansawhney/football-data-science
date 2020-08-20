@@ -14,6 +14,81 @@ GitHub repo: https://github.com/Friends-of-Tracking-Data-FoTD/LaurieOnTracking
 @author: Laurie Shaw (@EightyFivePoint)
 """
 
+
+"""
+Notes:
+
+    
+Pitch control can identify where on the field a team can pass the ball and retain possession.
+However, it does not tell you the 'value' of those passing optons
+
+A new pass is as likely as the other. We want to value pasing options to identify best passing options that increase the probability of scoring
+
+EXPECTED POSSESSION VALUE (EPV)
+EPV = Pposs (G | situation) -> Probability that the possession will result in a Goal, given the current situation
+                               - value of possessing the ball at any given situation
+                               
+EPV = Pposs (G | situation) = Pposs(G | ball, team, opponents, match state)
+
+      -- ball - where is the ball, pall position,
+      -- team - position and velocity of team players in possession,
+      -- opponents - position and velocity of opponent players not in possession,
+      -- match state - open play, set piece, score line, time left
+      
+For simplicity:
+
+                               
+EPV = Pposs (G | situation) = Pposs(G | ball, match state)
+
+      -- ball - where is the ball, pall position
+      -- match state - open play, set piece, score line, time left
+
+
+
+Think of possession as sequences of states.
+Next state is dependent on the current state - Markov process
+
+States can be:
+    1. zones on the fields - eg simple grid
+    2. set piece
+    3. goal (end state)
+    4. loss of possession (end state)
+    
+Core of the model is to calculate the prob of moving from the current state into another
+
+Given the current position of the ball, what is the prob that:
+    - The ball is successfully moved to another location on the field?
+    - A set piece is awarded (corner, penalty, feekick)?
+    - Goal is scored?
+    - Possession is lost?
+    
+Use a transition matrix between states
+
+Takes a lot of data to develop a EPV model
+
+EPV model: https://chart-studio.plotly.com/~laurieshaw/71/#/
+
+---
+
+Value of a pass
+
+The value of a completed action is the difference between the EPV value of the two states
+
+A pass from position Ri to Rf:
+        value added = EPV(Rf) - EPV(Ri)
+
+But about a player possession wants to pick the best option?
+
+An expected value at Rf is:
+    PitchControl(Rf) x EPV(Rf)
+    
+The current expected value at Ri is:
+    PitchControl(Ri) x EPV(Ri)
+    
+Expected value-added of the passing option is:
+    PitchControl(Rf) x EPV(Rf) - PitchControl(Ri) x EPV(Ri)
+"""
+
 import Metrica_IO as mio
 import Metrica_Viz as mviz
 import Metrica_Velocities as mvel
@@ -21,7 +96,8 @@ import Metrica_PitchControl as mpc
 import Metrica_EPV as mepv
 
 # set up initial path to data
-DATADIR = '/PATH/TO/WHERE/YOU/SAVED/THE/SAMPLE/DATA'
+APP_DIR = '/Users/rsawhney/dev/football-data-science/analysis-with-tracking-data/'
+DATADIR = APP_DIR + '/data'
 
 game_id = 2 # let's look at sample match 2
 
@@ -57,7 +133,7 @@ GK_numbers = [mio.find_goalkeeper(tracking_home),mio.find_goalkeeper(tracking_aw
 
 """ *** GET EPV SURFACE **** """
 home_attack_direction = mio.find_playing_direction(tracking_home,'Home') # 1 if shooting left-right, else -1
-EPV = mepv.load_EPV_grid(DATADIR+'/EPV_grid.csv')
+EPV = mepv.load_EPV_grid(APP_DIR+'/EPV_grid.csv')
 # plot the EPV surface
 mviz.plot_EPV(EPV,field_dimen=(106.0,68),attack_direction=home_attack_direction)
 
@@ -102,6 +178,12 @@ away_pass_value_added = sorted(away_pass_value_added, key = lambda x: x[1], reve
     
 print("Top 5 home team passes by expected EPV-added")
 print(home_pass_value_added[:5])
+'''
+checking with home_shots, all these passes are assists to a 
+shooting opportunity
+
+'''
+
 print("Top 5 away team passes by expected EPV-added")
 print(away_pass_value_added[:5])
 
