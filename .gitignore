@@ -1,0 +1,9 @@
+.DS_Store
+.python-version
+
+
+analysis-with-tracking-data/.DS_Store
+analysis-with-tracking-data/__pycache__/
+
+#video
+analysis-with-tracking-data/data/home_goal_2.mp4
