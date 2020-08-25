@@ -1,9 +1,16 @@
 .DS_Store
 .python-version
 
+passing-networks/.ipynb_checkpoints/
 
 analysis-with-tracking-data/.DS_Store
 analysis-with-tracking-data/__pycache__/
+passing-networks/__pycache__/utils.cpython-38.pyc
+passing-networks/processing/__pycache__/
+passing-networks/visualization/__pycache__/
 
 #video
 analysis-with-tracking-data/data/home_goal_2.mp4
+
+#data
+passing-networks/data/
