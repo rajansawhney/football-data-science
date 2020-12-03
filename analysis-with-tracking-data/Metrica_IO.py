@@ -7,7 +7,6 @@ Module for reading in Metrica sample data.
 
 Data can be found at: https://github.com/metrica-sports/sample-data
 
-@author: Laurie Shaw (@EightyFivePoint)
 """
 
 import pandas as pd

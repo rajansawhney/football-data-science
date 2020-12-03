@@ -24,9 +24,6 @@ Main Functions
 load_EPV_grid(): load pregenerated EPV surface from file. 
 calculate_epv_added(): Calculates the expected possession value added by a pass
 find_max_value_added_target(): Finds the *maximum* expected possession value that could have been achieved for a pass (defined by the event_id) by searching the entire field for the best target.
-    
-
-@author: Laurie Shaw (@EightyFivePoint)
 
 """
 

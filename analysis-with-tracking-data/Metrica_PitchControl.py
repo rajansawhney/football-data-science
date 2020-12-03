@@ -29,8 +29,6 @@ Classes
 
 The 'player' class collects and stores trajectory information for each player required by the pitch control calculations.
 
-@author: Laurie Shaw (@EightyFivePoint)
-
 """
 
 import numpy as np

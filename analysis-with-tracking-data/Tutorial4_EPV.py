@@ -11,7 +11,6 @@ Accompanying video tutorials can be found here: https://www.youtube.com/watch?v=
 
 GitHub repo: https://github.com/Friends-of-Tracking-Data-FoTD/LaurieOnTracking
 
-@author: Laurie Shaw (@EightyFivePoint)
 """
 
 

@@ -9,7 +9,6 @@ Data can be found at: https://github.com/metrica-sports/sample-data
 
 UPDATE for tutorial 4: plot_pitchcontrol_for_event no longer requires 'xgrid' and 'ygrid' as inputs. 
 
-@author: Laurie Shaw (@EightyFivePoint)
 """
 
 import matplotlib.pyplot as plt

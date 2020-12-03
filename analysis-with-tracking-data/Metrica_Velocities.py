@@ -7,8 +7,6 @@ Module for measuring player velocities, smoothed using a Savitzky-Golay filter, 
 
 Data can be found at: https://github.com/metrica-sports/sample-data
 
-@author: Laurie Shaw (@EightyFivePoint)
-
 """
 import numpy as np
 import scipy.signal as signal
