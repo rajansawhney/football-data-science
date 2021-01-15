@@ -114,7 +114,7 @@ x = np.arange(800, step=0.1)
 y = a + b*x
 
 ax.plot(minutes_played, goals_scored, linestyle='none',
-        marker='.', markerSize=12, color='black')
+        marker='.', markersize=12, color='black')
 ax.plot(x, y, color='black')
 
 # Show distances to line
